@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://mrgklwong.github.io/playwright-ts/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+        <title>Playwright TS UI Framework - Ka Lee Gary Wong</title>
+
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.min.css">
+        <link href="../css/base.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">
+            
+            Ka Lee Gary Wong
+            </a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
+            
+            
+            
+                
+                <li >
+                    <a href="..">
+                      Home
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../frameworks/">
+                      Frameworks
+                    </a>
+                </li>
+                
+            
+            
+            
+            
+            
+                
+                <li >
+                    <a href="../profile/">
+                      Profile
+                    </a>
+                </li>
+                
+            
+            
+            
+            </ul>
+
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+            
+            
+            
+            
+            
+            
+            
+              
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3">
+  
+<div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#playwright-ts-ui-framework">Playwright TS UI Framework</a></li>
+        
+            <li><a href="#getting-started">Getting Started</a></li>
+        
+            <li><a href="#conclusion">Conclusion</a></li>
+        
+    
+    </ul>
+</div>
+  
+</div>
+            <div class="col-md-9" role="main">
+
+<h1 id="playwright-ts-ui-framework">Playwright TS UI Framework</h1>
+<p>Developed by Microsoft, Playwright is a relatively new open source testing frameworks which has been gaining popularity since its release in Feb 2020. Although this page is focused on the TS UI side of the framework it handles much more, include accessibility, components and tracing.</p>
+<p>Playwright currently supports JS/TS, Java, Python and .Net</p>
+<p>In this page, I will demo the easy step of the framework</p>
+<h2 id="getting-started">Getting Started</h2>
+<ol>
+<li>
+<p>Download and install node for you OS </p>
+<p><strong>Windows</strong>
+- Download the node from the node site </p>
+<p><code>https://nodejs.org/dist/v18.12.1/node-v18.12.1-x64.msi</code></p>
+<p><strong>Mac</strong> (using homebrew)</p>
+<p><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></p>
+<p><code>brew install node</code></p>
+</li>
+<li>
+<p>Create a new folder </p>
+</li>
+<li>Inside the new folder install playwright <code>npm init playwright@latest</code>, follow the defaults prompts
+This will create the following files in the folder:</li>
+</ol>
+<pre><code>playwright.config.ts
+   package.json
+   package-lock.json
+   tests/
+   example.spec.ts
+   tests-examples/
+   demo-todo-app.spec.ts
+</code></pre>
+<p>And that's it! Or you can clone the example repo located <a href="https://github.com/mrgklwong/playwright-ts">here</a></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The devs at Playwright have done loads to make starting easy. 
+In less than 4 steps a SDET can start providing value with this new framework.</p>
+<p>The framework packed full of features including:</p>
+<ul>
+<li>Support of the latest browser</li>
+<li>Build in Video and Screenshot capture</li>
+<li>API testing and Mocking</li>
+<li>Authentication handling using sessions</li>
+<li>Test Generations for the lazy coder</li>
+<li>Accessibility Testing</li>
+<li>Support of POM design patten</li>
+<li>Built in retry, timeout and reporters.</li>
+<li>Ability to use selenium grid testing infra.</li>
+</ul>
+<p>So far the only downside of the framework I have noticed is the lack of backward browser compatibility. I might be able to find more.</p>
+<p>But I hope workarounds can be found.</p>
+<p>I will be exploring some of these features in other framework pages. </p></div>
+        </div>
+
+    <footer class="col-md-12">
+        <hr>
+        
+    </footer>
+
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+    </body>
+</html>
