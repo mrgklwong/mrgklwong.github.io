@@ -79,8 +79,8 @@
             
                 
                 <li >
-                    <a href="../blog/">
-                      Blog Posts
+                    <a href="../profile/">
+                      Profile
                     </a>
                 </li>
                 
@@ -107,6 +107,7 @@
 
         <div class="container">
             <div class="col-md-3">
+  
 <div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
@@ -114,15 +115,14 @@
         
             <li><a href="#set-up">Set Up.</a></li>
         
-    
-        <li class="main "><a href="#cheatsheet">Cheatsheet</a></li>
+            <li><a href="#cheatsheet">Cheatsheet</a></li>
         
-    
-        <li class="main "><a href="#conclusion">Conclusion</a></li>
+            <li><a href="#conclusion">Conclusion</a></li>
         
     
     </ul>
 </div>
+  
 </div>
             <div class="col-md-9" role="main">
 
@@ -151,7 +151,7 @@ Example</p>
     expect(response.ok()).toBeTruthy();                   // Asserts Tests on the response
 });
 </code></pre>
-<h1 id="cheatsheet">Cheatsheet</h1>
+<h2 id="cheatsheet">Cheatsheet</h2>
 <p>Use this cheatsheet to help with your tests.</p>
 <table>
 <thead>
@@ -193,7 +193,7 @@ Example</p>
 </table>
 <p>An example of api framework can be found <a href="https://github.com/mrgklwong/playwright-ts">here</a></p>
 <p>More information can be found on the <a href="https://playwright.dev/docs/test-api-testing">official site</a>.</p>
-<h1 id="conclusion">Conclusion</h1>
+<h2 id="conclusion">Conclusion</h2>
 <p>Playwright API testing is simple to set up, and has all the usual api testing features required. </p>
 <p>Using the <code>test.beforeAll</code> will allow data creation needed for the API test.</p>
 <p>But is it needed? Playwright has <code>fixtures</code> which we will use in place of before.test.
