@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        <link rel="canonical" href="https://mrgklwong.github.io/playwright-ts-api/">
+        <link rel="canonical" href="https://mrgklwong.github.io/playwright-ts-accessibility/">
         <link rel="shortcut icon" href="../img/favicon.ico">
 
-        <title>Playwright TS API Framework - Ka Lee Gary Wong</title>
+        <title>Playwright TS Accessibility Framework - Ka Lee Gary Wong</title>
 
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
@@ -111,11 +111,9 @@
 <div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#playwright-ts-api-framework">Playwright TS API Framework</a></li>
+        <li class="main active"><a href="#playwright-ts-accessibility-framework">Playwright TS Accessibility Framework</a></li>
         
-            <li><a href="#set-up">Set Up.</a></li>
-        
-            <li><a href="#cheatsheet">Cheatsheet</a></li>
+            <li><a href="#getting-started">Getting Started</a></li>
         
             <li><a href="#conclusion">Conclusion</a></li>
         
@@ -126,78 +124,38 @@
 </div>
             <div class="col-md-9" role="main">
 
-<h1 id="playwright-ts-api-framework">Playwright TS API Framework</h1>
-<p>As mentioned in the <a href="../playwright-ts/">TS UI framework</a> page, playwright is featured packed. On this page we demo the API feature of the framework.</p>
-<h2 id="set-up">Set Up.</h2>
+<h1 id="playwright-ts-accessibility-framework">Playwright TS Accessibility Framework</h1>
+<p>As mentioned in the <a href="../playwright-ts/">TS UI framework</a> page, playwright is featured packed. On this page we demo the Accessibility feature of the framework.</p>
+<h2 id="getting-started">Getting Started</h2>
 <p><strong>Step 1.</strong> Follow the setup on the <a href="../playwright-ts/">UI page</a></p>
-<p><strong>Step 2.</strong> Open the <code>playwright.config.ts</code> file and updated the <code>baseURL</code> to the api test endpoint. Add in headers too.
-Example</p>
-<pre><code> baseURL: 'https://example.apiendpoint.io',
-        extraHTTPHeaders: {
-            // We set this header per GitHub guidelines.
-            'Accept': 'application/json'
-            // Add authorization token to all requests.
-            // Assuming personal access token available in the environment.
-        },
-</code></pre>
-<p><strong>Step 3.</strong> Create a new <code>test.spec.ts</code> file</p>
-<p><strong>Step 4.</strong> Open the file add in the imports. The main testing library <code>@playwright/test</code> </p>
-<pre><code>import {expect, test} from '@playwright/test';
-</code></pre>
-<p><strong>Step 5.</strong> Start creating tests.  :)</p>
-<p>Basic test breakdown will look like the following code block:</p>
-<pre><code>test('Some title',async ({request}) =&gt; {                  // Sets up the Title, makes a async function using request.
-    const response = await request.get('/some endpoint'); // Acts Makes a get call with the request and sets it to response
-    expect(response.ok()).toBeTruthy();                   // Asserts Tests on the response
+<p><strong>Step 2.</strong> Import to the existing test file the following axe-core library <code>import AxeBuilder from '@axe-core/playwright'</code></p>
+<p><strong>Step 3.</strong> Configure you rule tags and exclusions.</p>
+<p><strong>Step 4.</strong> Use the AxeBuilder functions to analyze the code.</p>
+<p>Simple right?</p>
+<p>Here's an example </p>
+<pre><code>// importing playwright and axebuilder for the test
+import {test, expect} from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+
+test.describe('Testing', () =&gt; { 
+  test('should not have any automatically detectable accessibility issues', async ({ page }) =&gt; {
+
+    // Set up the test for site under test
+    await page.goto('https://your-site.com/'); 
+
+    //  Set up the axebuilder to use the site, with tags
+    const accessibilityScanResults = await new AxeBuilder({ page })
+        .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
+        .analyze(); 
+
+    // Add in a test to expect something from the results.
+    expect(accessibilityScanResults.violations).toEqual([]);
+  });
 });
 </code></pre>
-<h2 id="cheatsheet">Cheatsheet</h2>
-<p>Use this cheatsheet to help with your tests.</p>
-<table>
-<thead>
-<tr>
-<th>Code</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>request.post('endpoint', { }</code></td>
-<td>API POST call</td>
-</tr>
-<tr>
-<td><code>request.get('endpoint')</code></td>
-<td>API GET call</td>
-</tr>
-<tr>
-<td><code>request.put('endpoint', { }</code></td>
-<td>API PUT call</td>
-</tr>
-<tr>
-<td><code>request.delete('endpoint', { }</code></td>
-<td>API DELETE call</td>
-</tr>
-<tr>
-<td><code>const validate = require('jsonschema').validate;</code></td>
-<td>Creates a const validate to be used for schema validation</td>
-</tr>
-<tr>
-<td><code>const schema = await new URL('https://example/schema.json');</code></td>
-<td>Get the schema from the URL</td>
-</tr>
-<tr>
-<td><code>expect(validate(response, schema)).toBeTruthy();</code></td>
-<td>Using the validate and schema to check on the response</td>
-</tr>
-</tbody>
-</table>
-<p>An example of api framework can be found <a href="https://github.com/mrgklwong/playwright-ts">here</a></p>
-<p>More information can be found on the <a href="https://playwright.dev/docs/test-api-testing">official site</a>.</p>
 <h2 id="conclusion">Conclusion</h2>
-<p>Playwright API testing is simple to set up, and has all the usual api testing features required. </p>
-<p>Using the <code>test.beforeAll</code> will allow data creation needed for the API test.</p>
-<p>But is it needed? Playwright has <code>fixtures</code> which we will use in place of before.test.
-I will be exploring fixtures in another demo.</p></div>
+<p>Simple 3 ish extra lines to a current playwright scripts will allow the additional accessibility functions.</p>
+<p>Try it out!</p></div>
         </div>
 
     <footer class="col-md-12">
