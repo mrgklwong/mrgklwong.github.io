@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://mrgklwong.github.io/terratest/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Terratest, Testing Deployments - Ka Lee Gary Wong</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Terratest, Testing Deployments";
+        var mkdocs_page_input_path = "terratest.md";
+        var mkdocs_page_url = "/terratest/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Ka Lee Gary Wong
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../frameworks/">Frameworks</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../profile/">Profile</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Ka Lee Gary Wong</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+      <li class="breadcrumb-item active">Terratest, Testing Deployments</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="terratest-testing-deployments">Terratest, Testing Deployments</h1>
+<p>Terratest is a Go library that provides patterns and helper functions for testing infrastructure, with 1st-class support for Terraform, Packer, Docker, Kubernetes, AWS, GCP, and more. Created by gruntwork.io, the team behind terragrunt.</p>
+<p>In this page, I will demo the easy step of the framework, following the instructions on the quick-start</p>
+<h2 id="getting-started">Getting Started</h2>
+<ol>
+<li>
+<p>Download and install go lang (mac) and terraform using brew</p>
+<p><strong>Mac</strong> (using homebrew)</p>
+</li>
+</ol>
+<p><code>brew install go</code></p>
+<p><code>brew install terraform</code></p>
+<ol>
+<li>
+<p>Create a new folders <code>example</code> and <code>test</code></p>
+</li>
+<li>
+<p>Inside the new <code>example</code> folder copy the files from this directory
+The output of this step should look like this:</p>
+</li>
+</ol>
+<pre><code>example/
+   main.tf
+   output.tf
+   varfile.tfvars
+   example.spec.ts
+   variables.tf
+</code></pre>
+<ol>
+<li>Inside the new <code>test</code> folder create file called <code>terraform_basic_example_test.go</code> with the following contents:</li>
+</ol>
+<pre><code>package test
+
+import (
+    &quot;testing&quot;
+
+    &quot;github.com/gruntwork-io/terratest/modules/terraform&quot;
+    &quot;github.com/stretchr/testify/assert&quot;
+)
+
+// An example of how to test the simple Terraform module in examples/terraform-basic-example using Terratest.
+func TestTerraformBasicExample(t *testing.T) {
+    t.Parallel()
+
+    expectedText := &quot;test&quot;
+    expectedList := []string{expectedText}
+    expectedMap := map[string]string{&quot;expected&quot;: expectedText}
+
+    terraformOptions := terraform.WithDefaultRetryableErrors(t, &amp;terraform.Options{
+        // website::tag::1::Set the path to the Terraform code that will be tested.
+        // The path to where our Terraform code is located
+        TerraformDir: &quot;../examples&quot;,
+
+        // Variables to pass to our Terraform code using -var options
+        Vars: map[string]interface{}{
+            &quot;example&quot;: expectedText,
+
+            // We also can see how lists and maps translate between terratest and terraform.
+            &quot;example_list&quot;: expectedList,
+            &quot;example_map&quot;:  expectedMap,
+        },
+
+        // Variables to pass to our Terraform code using -var-file options
+        VarFiles: []string{&quot;varfile.tfvars&quot;},
+
+        // Disable colors in Terraform commands so its easier to parse stdout/stderr
+        NoColor: true,
+    })
+
+    // website::tag::4::Clean up resources with &quot;terraform destroy&quot;. Using &quot;defer&quot; runs the command at the end of the test, whether the test succeeds or fails.
+    // At the end of the test, run `terraform destroy` to clean up any resources that were created
+    defer terraform.Destroy(t, terraformOptions)
+
+    // website::tag::2::Run &quot;terraform init&quot; and &quot;terraform apply&quot;.
+    // This will run `terraform init` and `terraform apply` and fail the test if there are any errors
+    terraform.InitAndApply(t, terraformOptions)
+
+    // Run `terraform output` to get the values of output variables
+    actualTextExample := terraform.Output(t, terraformOptions, &quot;example&quot;)
+    actualTextExample2 := terraform.Output(t, terraformOptions, &quot;example2&quot;)
+    actualExampleList := terraform.OutputList(t, terraformOptions, &quot;example_list&quot;)
+    actualExampleMap := terraform.OutputMap(t, terraformOptions, &quot;example_map&quot;)
+
+    // website::tag::3::Check the output against expected values.
+    // Verify we're getting back the outputs we expect
+    assert.Equal(t, expectedText, actualTextExample)
+    assert.Equal(t, expectedText, actualTextExample2)
+    assert.Equal(t, expectedList, actualExampleList)
+    assert.Equal(t, expectedMap, actualExampleMap)
+}
+</code></pre>
+<ol>
+<li>Install the go deps</li>
+</ol>
+<pre><code>  cd test
+   go mod init test
+   go mod tidy
+</code></pre>
+<ol>
+<li>Run the tests!
+Hopefully when the test will run the output of the terminal will end with</li>
+</ol>
+<pre><code>--- PASS: TestTerraformBasicExample (0.80s)
+PASS
+ok      command-line-arguments  1.312s
+
+</code></pre>
+<h2 id="conclusion">Conclusion</h2>
+<p>As QA within Devops, it helps to have a framework that can validated Infrastructure as code (IAC). In my mind having pr validating with terratest stops the checkin of broken terraform code. It uses Go Lang, which new SDETSs will welcome the challenge, compare to the normal js/java/python most SDETs know. </p>
+<p>I will explore other IAC testing frameworks, in other posts.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
